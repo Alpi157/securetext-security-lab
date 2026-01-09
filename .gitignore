@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local secrets
+*.env
+.env
+
+# Logs / captures
+*.log
+*.pcap
+*.pcapng
+
+# Local databases / user data
+users.json
+*.sqlite
+*.db
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
