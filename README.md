@@ -1,187 +1,261 @@
-# SecureText ECE 572 Assignment Series
+# SecureText Security Lab (3-Part Hardening Series)
 
-This repository contains series of assignments for the ECE 572 in Summer 2025, by Dr. Ardeshir Shojaeinasab. We will be using a console-based messenger application called "SecureText". Students will progressively identify vulnerabilities, demonstrate attacks, and implement security fixes across three assignments.
+SecureText is a **console-based client/server messenger** built on purpose to be insecure first, then progressively hardened. This repo documents a **3-part security lab** where I:
+
+- **identified vulnerabilities**
+- **demonstrated realistic attacks**
+- **implemented secure fixes**
+- **validated the improvements** with evidence (logs, screenshots, and reports)
+
+The end result is a practical, hands-on showcase of **application security + authentication + applied cryptography** in Python.
+
+---
+
+## What You’ll Find in This Repo
+
+- A runnable messenger application (TCP sockets + JSON protocol)
+- Three lab parts that build on each other:
+  1) security vulnerability discovery + foundational fixes  
+  2) modern authentication + Zero Trust controls  
+  3) end-to-end encryption + secure session lifecycle  
+- Reports and deliverables (implementation + writeups + evidence)
+
+> **Security Note:** Some versions in this lab intentionally include insecure designs for learning and demonstration. Run only in a local/lab environment.
+
+---
 
 ## Learning Objectives
 
-By completing this assignment series, you will gain hands-on experience with:
-- Common security vulnerabilities and attack techniques
-- Cryptographic implementations and their pitfalls
-- Network security and traffic analysis
-- Authentication mechanisms and multi-factor authentication
-- Zero Trust security principles
-- Asymmetric cryptography and digital signatures
+By working through this lab, I got hands-on experience with:
 
-## Assinment Structure
+- Vulnerability discovery and secure design thinking
+- Password security (hashing, salting, migration)
+- Network security (traffic capture, eavesdropping, tampering)
+- Message integrity (MAC pitfalls vs secure HMAC)
+- MFA using TOTP and rate limiting
+- OAuth 2.0 login flow (console-compatible) with CSRF protections (state) and optional PKCE
+- Zero Trust principles (RBAC, re-auth for sensitive actions, session limits, logging/monitoring)
+- Applied cryptography for secure communication (ECDH, HKDF, AES-GCM)
+- Key/session lifecycle management and secure cleanup
 
-This hands-on practice is divided into **three assignments**, each building upon the previous one:
+---
 
-### Assignment 1: Foundations of Security Vulnerabilities
-**Focus**: Basic security concepts, password security, and network attacks
-- **Task 1**: Vulnerability Analysis (analyze the provided insecure messenger)
-- **Task 2**: Password Security (hashing, salting)
-- **Task 3**: Network Security (eavesdropping, message tampering, MAC attacks)
+## Lab Structure
 
-### Assignment 2: Advanced Authentication and Authorization
-**Focus**: Modern authentication mechanisms and access control
-- **Task 4**: Multi-Factor Authentication (TOTP implementation)
-- **Task 5**: OAuth Integration (third-party authentication)
-- **Task 6**: Zero Trust Implementation (identity verification, least privilege)
+This lab is divided into **three parts**, each expanding the security posture of SecureText.
 
-### Assignment 3: Advanced Cryptography and Secure Communication
-**Focus**: End-to-end security and cryptographic protocols
-- **Task 7**: Asymmetric Cryptography (RSA/ECDSA key exchange)
-- **Task 8**: Digital Signatures (message authentication and non-repudiation)
-- **Task 9**: Secure Protocol Design (putting it all together)
+### Part 1 — Foundations: Vulnerabilities, Password Security, Network Attacks, and MACs
+
+**Focus:** identify real weaknesses, exploit them, then fix them.
+
+**Part 1A — Vulnerability Analysis**
+- Ran the base application and mapped the attack surface
+- Identified major issues across:
+  - authentication / authorization
+  - data protection (password storage)
+  - confidentiality and integrity on the wire
+  - privacy (user enumeration)
+  - availability (resource exhaustion)
+- Documented realistic exploitation scenarios for each finding
+
+**Part 1B — Password Security (Data at Rest)**
+- Replaced plaintext password storage with:
+  - a fast hash baseline (to show why it’s insufficient)
+  - a slow adaptive hash (bcrypt recommended)
+- Implemented per-user salts (bcrypt includes salt)
+- Added a migration strategy to upgrade legacy stored passwords
+- Demonstrated password cracking differences (dictionary/rainbow-table resistance + timing impact)
+
+**Part 1C — Network Security + Message Authentication Codes**
+- Demonstrated plaintext traffic exposure via packet capture tools (Wireshark/tcpdump)
+- Implemented an intentionally flawed MAC construction (to show pitfalls)
+- Demonstrated how some MAC constructions are breakable (e.g., length extension risk in hash-prefix MACs)
+- Replaced the flawed MAC with a secure construction (HMAC-SHA-256)
+- Validated that forged/tampered messages are rejected
+
+---
+
+### Part 2 — Modern Authentication & Zero Trust Controls
+
+**Focus:** strengthen identity, access control, and monitoring.
+
+**Part 2A — MFA with TOTP**
+- Added TOTP-based MFA using `pyotp`
+- Generated per-user TOTP secrets during enrollment
+- Provided QR onboarding (console-friendly ASCII QR)
+- Added usability/security features:
+  - clock-skew tolerance
+  - rate limiting for TOTP attempts
+  - generic error responses to reduce credential oracle leaks
+- Demonstrated how MFA blocks account takeover when passwords are compromised
+
+**Part 2B — OAuth 2.0 Login (Console-Compatible)**
+- Implemented GitHub OAuth login via a console-friendly flow:
+  - open the authorization URL in browser
+  - user pastes redirect URL back into the console
+  - app extracts the authorization code and validates `state`
+  - exchanges code for access token and retrieves user identity
+- Security features:
+  - random `state` parameter to prevent CSRF
+  - optional PKCE (S256) to reduce authorization code interception risk
+  - no persistent token storage (tokens treated as short-lived)
+- Hybrid support:
+  - local username/password login
+  - OAuth login (with optional account linking if desired)
+
+**Part 2C — Zero Trust Enhancements**
+- Implemented “never trust, always verify” patterns:
+  - Challenge-response authentication (HMAC-based)
+  - Role-Based Access Control (RBAC): `user` vs `admin`
+  - Sensitive action protection (re-authentication required)
+  - Session security:
+    - inactivity timeout
+    - action-count limits (auto-logout)
+  - Logging & basic monitoring:
+    - auth attempt logs (success/failure)
+    - command execution logs
+    - warnings after repeated failed attempts
+    - logs for denied admin actions
+
+---
+
+### Part 3 — End-to-End Encryption (E2EE) & Secure Session Lifecycle
+
+**Focus:** make the server blind to message contents while preserving integrity and usability.
+
+**Part 3A — ECDH Key Exchange + HKDF**
+- Implemented elliptic-curve Diffie–Hellman (P-256 / secp256r1)
+- Derived symmetric keys using HKDF-SHA-256 from shared secrets
+- Designed the flow so clients can establish shared keys without exposing key material to the server
+
+**Part 3B — AES-256-GCM Authenticated Encryption**
+- Implemented per-message encryption using AES-GCM:
+  - random nonces per message
+  - integrity via GCM authentication tag
+- Ensured that:
+  - ciphertext differs even for identical plaintext (fresh randomness)
+  - tampering causes decryption failure (InvalidTag)
+
+**Part 3C — Session Management & Secure Cleanup**
+- Implemented session expiration and lifecycle controls to reduce key exposure:
+  - inactivity timeout (e.g., 30 minutes)
+  - pre-expiration warning (e.g., 5 minutes remaining)
+  - forced re-authentication after expiry
+  - secure cleanup of cryptographic state on both sides (wipe cached key material)
+- Demonstrated:
+  - server stores/relays only encrypted blobs
+  - message history is unreadable on the server side
+
+---
+
+## Repository Layout
+
+```text
+.
+├── README.md
+├── part1/
+│   ├── README.md
+│   ├── Part1_Report.md
+│   └── deliverables/
+├── part2/
+│   ├── README.md
+│   ├── Part2_Report.md
+│   └── deliverables/
+├── part3/
+│   ├── README.md
+│   ├── Part3_Report.md
+│   └── deliverables/
+├── src/
+│   └── securetext.py
+└── .gitignore
+
+---
 
 ## Getting Started
 
 ### Prerequisites
-- Python 3.7 or higher
-- Basic understanding of networking concepts
-- Solid knowledge of cryptography and security scenarios explained in the class, ECE 572
+
+- Python 3.7+
+- Basic networking knowledge (sockets, ports, localhost)
+- Git
 - Familiarity with command-line tools
-- Git installed on your system
 
-### Initial Setup
+### Install / Setup
 
-1. **Fork this repository** to your GitHub account
-2. **Clone your fork** to your local machine:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/ECE572_Summer2025_SecureText.git
-   cd ECE572_Summer2025_SecureText
-   ```
-3. **Create a new branch** for your work:
-   ```bash
-   git checkout -b assignmentX-solutions # or whatever name you prefer for the branch. In this name X is the assignment index
-   ```
+Clone the repo:
 
-### Repository Structure
-
-```
-ECE572_Summer2025_SecureText/
-├── README.md                     # This file
-├── assignments/
-│   ├── assignment1/
-│   │   ├── README.md            # Assignment 1 instructions
-│   │   ├── REPORT_TEMPLATE.md   # Report template
-│   │   └── deliverables/        # Your solutions go here
-│   ├── assignment2/
-│   │   ├── README.md            # Assignment 2 instructions
-│   │   ├── REPORT_TEMPLATE.md   # Report template
-│   │   └── deliverables/        # Your solutions go here
-│   └── assignment3/
-│       ├── README.md            # Assignment 3 instructions
-│       ├── REPORT_TEMPLATE.md   # Report template
-│       └── deliverables/        # Your solutions go here
-├── src/
-│   └── securetext.py           # Base insecure messenger
-│ 
-├── docs/
-│   └── SETUP.md               # Detailed setup instructions
-│
-└── .gitignore
+```bash
+git clone https://github.com/Alpi157/securetext-security-lab.git
+cd YOUR_REPO
 ```
 
-## Base Application
+(Recommended) Create a branch for your changes:
 
-The repository includes a fully functional but **intentionally insecure** messenger application (`src/securetext.py`) that serves as the foundation for all assignments. This application includes:
+```bash
+git checkout -b lab-work
+```
 
-- Account creation and authentication
-- Real-time messaging via TCP sockets
-- User management and online status
-- JSON-based client-server protocol
+### Run the Base Application
 
-### Running the Base Application
+Start the server:
 
-1. **Start the server**:
-   ```bash
-   python3 src/securetext.py server
-   ```
+```bash
+python3 src/securetext.py server
+```
 
-2. **Start a client** (run multiple times for different users):
-   ```bash
-   python3 src/securetext.py
-   ```
+Start a client (run multiple terminals for different users):
 
-3. **Create accounts** and start messaging to explore the application
+```bash
+python3 src/securetext.py
+```
 
-## Security Warnings
+Create accounts and send messages to explore how the system behaves.
 
-**IMPORTANT**: The base application contains multiple intentional security and privacy vulnerabilities. These vulnerabilities are **by design** and will be addressed throughout the assignments.
+---
 
-## Assignment Workflow
+## Tools Used in This Lab
 
-For each assignment:
+### Network Analysis
+- Wireshark
+- tcpdump
+- netstat / lsof
 
-1. **Read the assignment instructions** in the respective `assignments/assignmentX/README.md`
-2. **Implement your solutions** in the `assignments/assignmentX/deliverables/` folder
-3. **Write your report** using the provided template and put it as a deliverable beside the codes
-4. **Commit your changes**:
-   ```bash
-   git add .
-   git commit -m "Complete Assignment X Task Y"
-   git push origin assignmentX-solutions
-   ```
-5. **Submit on Brightspace** with your GitHub repository fork link along with the report reuploaded on the Brightspace
-
-## Tools You Might Need
-
-### Network Analysis Tools
-- **Wireshark** (GUI packet analyzer)
-- **tcpdump** (command-line packet capture)
-- **netstat** (network connection monitoring)
-
-### Cryptographic Tools
-- **hashcat** (password cracking)
-- **OpenSSL** (cryptographic operations)
-- **hash_extender** or **HashPump** (length extension attacks)
+### Cryptography / Security Utilities
+- OpenSSL
+- hashcat
+- hash_extender / HashPump
 
 ### Python Libraries
-You may need to install additional Python packages.
+- bcrypt
+- pyotp
+- qrcode
+- cryptography
 
-## Documentation
+To install per-part dependencies (if a `requirements.txt` exists):
 
-Detailed extra setup documentation is available in the `docs/` folder, if needed:
-- **Setup Guide**: Complete environment setup instructions
+```bash
+pip install -r requirements.txt
+```
 
-## Assessment Criteria
+---
 
-Each assignment will be evaluated on:
-- **Technical Implementation** (40%): Correctness and completeness of solutions
-- **Security Understanding** (30%): Depth of vulnerability analysis and countermeasures
-- **Attack Demonstrations** (20%): Clear evidence of successful attacks
-- **Overall Report Quality** (10%): Clarity, organization, and proper screenshot evidences
+## Safety & Responsible Use
 
-## Academic Integrity
+This lab includes insecure components and attack demonstrations strictly for educational purposes.
 
-- All work must be your own individual effort
-- You may discuss concepts with classmates but not share code
-- Use **GenAI** for help but do not let **GenAI** to do all the work and you should understand everything yourself
-- If you used any **GenAI** help make sure you cite the contribution of **GenAI** properly
-- Properly cite any external resources or libraries used
-- Include your forked repository link in all submissions
+- Run only in local/lab environments
+- Do not use these techniques on systems you don’t own or have explicit permission to test
+- Do not expose the vulnerable versions to the public internet
 
-## Getting Help
+---
 
-- **Documentation**: Check the `docs/` folder for detailed guides
-- **Issues**: Post questions or report bugs or unclear instructions via GitHub Issues
+## Outcomes
 
-## Important Notes
+By the end of the lab, SecureText evolves from an insecure messaging app into a prototype with:
 
-- Keep your repository private until after the course ends otherwise you receive zero on assignments
-- Each assignment builds upon the previous one
-- Start early - security implementations can be complex
-- Test your solutions thoroughly
-- Document your attacks with screenshots and logs
-
-## Learning Outcomes
-
-By the end of this lab series, you will have:
-- Built a secure messaging application from an insecure foundation
-- Demonstrated real-world attack techniques
-- Implemented modern authentication and cryptographic protocols
-- Gained practical experience with security tools and methodologies
-- Developed a security-first mindset for software development
-
-Good luck!
+- Strong password storage (bcrypt + migration)
+- MFA (TOTP) and enhanced login protections
+- OAuth-based login (console-compatible)
+- Zero Trust controls (RBAC, re-auth, session limits, logging)
+- End-to-end encryption using ECDH + HKDF + AES-GCM
+- A session lifecycle that reduces long-term key exposure
