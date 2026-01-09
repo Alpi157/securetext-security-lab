@@ -32,7 +32,7 @@ In this part, I will analyze an intentionally insecure messenger application, id
 
 ---
 
-## Task 1: Security Vulnerability Analysis (25 points)
+## Task 1: Security Vulnerability Analysis
 
 ### Background
 You have been provided with a fully functional but intentionally insecure console-based messenger application called "SecureText" (located at `src/securetext.py`). Your task is to analyze this application and identify its security vulnerabilities.
@@ -64,7 +64,7 @@ You have been provided with a fully functional but intentionally insecure consol
 
 ---
 
-## Task 2: Securing Passwords at Rest (25 points)
+## Task 2: Securing Passwords at Rest
 
 ### Background
 The base application stores user passwords in plaintext, making them vulnerable if the user database is compromised. You will implement secure password storage mechanisms.
@@ -113,7 +113,7 @@ The base application stores user passwords in plaintext, making them vulnerable 
 
 ---
 
-## Task 3: Network Security and Message Authentication (50 points)
+## Task 3: Network Security and Message Authentication 
 
 ### Background
 The application sends messages in plaintext over the network, making them vulnerable to eavesdropping and tampering. You will implement and demonstrate these attacks and implement message authentication codes.
