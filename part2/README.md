@@ -1,13 +1,12 @@
-# Assignment 2: Advanced Authentication and Authorization
+# Part 2: Advanced Authentication and Authorization
 **Focus**: Multi-factor authentication, OAuth integration, and Zero Trust principles
 
 ## Overview
 
-Building on Assignment 1's foundation, you will now implement advanced authentication mechanisms and authorization controls. This assignment explores modern authentication patterns, multi-factor authentication, and Zero Trust security principles.
+Building on Part 1's foundation, I will now implement advanced authentication mechanisms and authorization controls. This assignment explores modern authentication patterns, multi-factor authentication, and Zero Trust security principles.
 
 ## Learning Objectives
 
-After completing this assignment, you will understand:
 - Multi-factor authentication (MFA) implementation and security benefits
 - OAuth 2.0 integration for third-party authentication
 - Time-based One-Time Passwords (TOTP) and their cryptographic foundation
@@ -28,7 +27,7 @@ After completing this assignment, you will understand:
 
 ---
 
-## Task 4: Multi-Factor Authentication with TOTP (40 points)
+## Task 4: Multi-Factor Authentication with TOTP 
 
 ### Background
 Passwords alone are vulnerable to various attacks (phishing, database breaches, credential stuffing). Multi-factor authentication adds additional security layers by requiring multiple forms of verification.
@@ -87,7 +86,7 @@ Passwords alone are vulnerable to various attacks (phishing, database breaches, 
 
 ---
 
-## Task 5: OAuth Integration (35 points)
+## Task 5: OAuth Integration
 
 ### Background
 OAuth 2.0 allows users to authenticate using existing accounts (e.g., GitHub) without sharing passwords. This reduces the risk of password reuse and leverages the security of trusted identity providers. Although OAuth is often implemented in web applications, this task guides you through integrating OAuth authentication in a **console-based system** using a simplified flow.
@@ -163,7 +162,7 @@ OAuth 2.0 allows users to authenticate using existing accounts (e.g., GitHub) wi
 
 ---
 
-## Task 6: Zero Trust Implementation (40 points)
+## Task 6: Zero Trust Implementation 
 
 ### Background
 Zero Trust is a modern security model based on the principle of "never trust, always verify." It assumes that every user and device must be continuously authenticated, authorized, and validated — even if they are already inside the network. This task explores practical Zero Trust ideas in the context of your SecureText messenger.
@@ -174,7 +173,7 @@ Zero Trust is a modern security model based on the principle of "never trust, al
 
 ---
 
-### Part A: Challenge-Response Authentication (10 points)
+### Part A: Challenge-Response Authentication
 
 1. **Basic Challenge-Response**:
    - Implement a simple challenge-response mechanism: `MAC(k, c)`
@@ -188,7 +187,7 @@ Zero Trust is a modern security model based on the principle of "never trust, al
 
 ---
 
-### Part B: Role-Based Access Control (RBAC) and Session Security (15 points)
+### Part B: Role-Based Access Control (RBAC) and Session Security 
 
 1. **User Roles**:
    - Define roles: `user`, `admin`
@@ -202,7 +201,7 @@ Zero Trust is a modern security model based on the principle of "never trust, al
 
 ---
 
-### 🔹 Part C: Logging and Basic Monitoring (15 points)
+### Part C: Logging and Basic Monitoring 
 
 1. **Action Logging**:
    - Log authentication attempts (successful and failed)
@@ -249,33 +248,3 @@ Zero Trust is a modern security model based on the principle of "never trust, al
 - **Testing**: Test with multiple users and different scenarios
 - **Progressive Enhancement**: Each task builds on the previous one(if not conflicting)
 - **Security First**: Always consider the security implications of your implementations
-
-## Common Issues and Solutions
-
-### TOTP Issues
-- **Time Sync**: Ensure system clock is accurate for TOTP validation
-- **QR Code Display**: Use ASCII art for console compatibility
-- **Secret Storage**: Encrypt TOTP secrets in the database
-
-### OAuth Issues
-- **HTTPS Requirements**: Some providers require HTTPS - use ngrok for local testing
-- **State Parameter**: Always validate state to prevent CSRF attacks
-- **Token Storage**: Securely store and handle access tokens
-
-### Zero Trust Implementation
-- **Logging**: Ensure logs don't contain sensitive information
-
-## Recommended Reading
-
-- RFC 6238 (TOTP specification)
-- RFC 6749 (OAuth 2.0 specification)
-- NIST SP 800-207 (Zero Trust Architecture)
-- OWASP Authentication Cheat Sheet
-- Google's BeyondCorp papers on Zero Trust
-
----
-
-**Due Date**: July 12th, 11 PM
-**Submission**: Submit your report on Brightspace with your GitHub repository link
-
-**Good Luck!**
