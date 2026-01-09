@@ -72,11 +72,11 @@ key32  = HKDF(algorithm=hashes.SHA256(),
 
 That 256-bit output becomes the AES-GCM key for exactly one message; when the next message is sent, a fresh epub is created and the process starts anew, giving the protocol forward secrecy without requiring heavyweight ratchets.
 
-![1](images/1.png)
+![1](deliverables/images/1.png)
 
 shows Alice and Bob printing their generated PEM public keys and the phrase “Session key established” after HKDF completes.
 
-![2](images/2.png)
+![2](deliverables/images/2.png)
 
 
 ### 2.3 AES-256-GCM Hybrid Encryption
@@ -92,7 +92,7 @@ tag = enc.tag
 ```
 GCM binds the nonce, the ciphertext and the tag together so that any bit flip, including replaying an old ciphertext with a new tag, causes decryption to fail at finalize(). The implementation never re-uses a nonce with the same key because by definition that key exists for only one round-trip.
 
-![9](images/9.png)
+![9](deliverables/images/9.png)
 
 shows two sequential runs in which an identical plaintext (“hello”) encrypts to two completely different ciphertexts, validating both forward secrecy and nonce uniqueness.
 
@@ -110,14 +110,14 @@ Transport layer: the server’s sole responsibility is to copy that blob from th
 
 Receiver side: the client parses the JSON, loads epub with serialization.load_pem_public_key(), re-runs ECDH + HKDF, then feeds nonce, ciphertext, and tag into Cipher(...).decryptor(). If and only if the tag validates, the plaintext is displayed to the user interface; otherwise the code prints [DECRYPTION FAILED] and discards the packet.
 
-![3](images/3.png)
+![3](deliverables/images/3.png)
 
-![4](images/4.png)
+![4](deliverables/images/4.png)
 
-![10](images/10.png)
+![10](deliverables/images/10.png)
 This packet capture shows that the SEND_MESSAGE command transmits only encrypted fields (ciphertext, nonce, tag) in base64, proving that no plaintext is exposed in transit and the server merely relays opaque data.
 
-![11](images/11.png)
+![11](deliverables/images/11.png)
 Attempting to decrypt the message with a fake AES key results in an InvalidTag exception, confirming that without the correct ECDH-derived key, decryption fails and message integrity is enforced.
 
 
@@ -165,12 +165,12 @@ self.running      = False
 
 effectively zeroising all cryptographic state, satisfying the secure-cleanup requirement.
 
-![6](images/6.png)
+![6](deliverables/images/6.png)
 live warning banner five minutes before expiry.
 
-![7](images/7.png)
+![7](deliverables/images/7.png)
 
-![13](images/13.png)
+![13](deliverables/images/13.png)
 client being dropped to the login prompt and forced to re-authenticate.
 
 
