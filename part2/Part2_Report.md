@@ -1,20 +1,8 @@
-# Report for ECE 572 Assignment 2
-
----
-
-**Course**: ECE 572; Summer 2025
-**Instructor**: Dr. Ardeshir Shojaeinasab
-**Student Name**: Alpar Arman  
-**Student ID**: V01072465  
-**Assignment**: Assignment 2  
-**Date**: July 4, 2025  
-**GitHub Repository**: https://github.com/Alpi157/ECE572_Assignment2.git
-
----
+# Report for part 2
 
 ## Executive Summary
 
-In this assignment, I enhanced the SecureText messenger application to include advanced authentication and authorization mechanisms, focusing on multi-factor authentication, OAuth integration, and Zero Trust security principles. The goal was to strengthen user authentication, reduce reliance on passwords, and improve the overall security posture of the system.
+In this part, I enhanced the SecureText messenger application to include advanced authentication and authorization mechanisms, focusing on multi-factor authentication, OAuth integration, and Zero Trust security principles. The goal was to strengthen user authentication, reduce reliance on passwords, and improve the overall security posture of the system.
 
 First, I implemented TOTP as a second factor to protect against password compromise. Next, I integrated GitHub OAuth login to allow users to authenticate without directly sharing passwords, using a trusted third-party provider. Finally, I applied Zero Trust principles, adding challenge-response authentication, role-based access control, strict session management, and detailed logging with alerts for suspicious activities.
 
