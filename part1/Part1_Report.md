@@ -1,28 +1,8 @@
-# Report for ECE 572 Assignment 1
-
----
-
-**Course**: ECE 572; Summer 2025
-**Instructor**: Dr. Ardeshir Shojaeinasab
-**Student Name**: Alpar Arman  
-**Student ID**: V01072465  
-**Assignment**: Assignment 1  
-**Date**: June 20, 2025  
-**GitHub Repository**: https://github.com/Alpi157/ECE572_Assignment1.git
-
----
+# Report for part 1
 
 ## Executive Summary
 
-<!-- 
-Provide a brief overview of what you accomplished in this assignment. 
-For Assignment 1: Focus on vulnerabilities found and security improvements made
-For Assignment 2: Focus on authentication enhancements and Zero Trust implementation  
-For Assignment 3: Focus on cryptographic protocols and end-to-end security
-Keep this section to 1-2 paragraphs.
--->
-
-In this assignment, I analyzed and secured the SecureText messaging application, which was intentionally designed with several critical vulnerabilities. I identified six major weaknesses, including plaintext password storage, unauthenticated password reset, lack of login rate limiting, and unencrypted message transport. For each issue, I demonstrated realistic client-server attacks, such as dictionary attacks, message eavesdropping, and an MD5 length-extension exploit.
+In this part, I analyzed and secured the SecureText messaging application, which was intentionally designed with several critical vulnerabilities. I identified six major weaknesses, including plaintext password storage, unauthenticated password reset, lack of login rate limiting, and unencrypted message transport. For each issue, I demonstrated realistic client-server attacks, such as dictionary attacks, message eavesdropping, and an MD5 length-extension exploit.
 
 To address these risks, I implemented secure password storage using bcrypt with per-user salts, replacing earlier plaintext and SHA-256 approaches. I also introduced message integrity protections, first by using a flawed MAC (MD5-based), then upgrading to a secure HMAC-SHA-256 design that rejects forged messages. My fixes significantly improved the system’s authentication, data protection, and command integrity, laying the groundwork for a more secure communication platform.
 
@@ -47,7 +27,6 @@ To address these risks, I implemented secure password storage using bcrypt with 
 ## 1. Introduction
 
 ### 1.1 Objective
-<!-- Describe the main objectives of this assignment -->
 Objective: Analyze the provided insecure messenger application and identify security weaknesses.
 
 ### 1.2 Scope
@@ -768,15 +747,6 @@ Vulnerability 4: Denial of service via unbounded threads and sockets remains pos
 
 ## 8. References
 
-<!-- 
-Include all sources you referenced, including:
-- Course materials and lecture notes
-- RFCs and standards
-- Academic papers
-- Documentation and libraries used
-- Tools and software references
--->
-
 HashPump tool – https://github.com/Phantomn/HashPump
 
 CourseNotes_Part_One.
@@ -786,8 +756,6 @@ https://github.com/pyca/bcrypt
 
 MD5 considered harmful today. IETF RFC 6151: Updated Security Considerations for MD5/MD4
 https://datatracker.ietf.org/doc/html/rfc6151
-
-ChatGPT response on SecureText MAC implementation. https://chat.openai.com
 
 ---
 
