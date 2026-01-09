@@ -1,20 +1,6 @@
-# Assignment3 Report 
-
----
-
-**Student Name**: Alpar Arman 
-
-**Student ID**: V01072465 
-
-**Assignment**: Assignment 3  
-
-**Date**: July 20, 2025  
-
-**GitHub Repository**: https://github.com/Alpi157/ECE572_Assignment3
+# Report for part 3
 
 **Demo video**: https://youtu.be/Drs5a_C5X9E (too big to upload to github)
-
----
 
 
 ## Table of Contents
@@ -31,7 +17,7 @@
 
 ## 1. Executive Summary
 
-Assignment 3 pushed SecureText from “secure-ish” to genuinely end-to-end encrypted messaging. Up to Assignment 2 the application already supported hardened login (bcrypt + TOTP), HMAC challenges, OAuth‐based single-sign-on and basic server-side session limits. What it lacked was cryptography that would keep the server permanently blind to user content and a session model that could guarantee forward secrecy.
+Part 3 pushed SecureText from “secure-ish” to genuinely end-to-end encrypted messaging. Up to part 2 the application already supported hardened login (bcrypt + TOTP), HMAC challenges, OAuth‐based single-sign-on and basic server-side session limits. What it lacked was cryptography that would keep the server permanently blind to user content and a session model that could guarantee forward secrecy.
 
 The work delivered in this milestone adds four tightly-coupled capabilities:
 
