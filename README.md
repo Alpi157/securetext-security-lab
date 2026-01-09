@@ -151,7 +151,7 @@ This lab is divided into **three parts**, each expanding the security posture of
 ## Repository Layout
 
 ```text
-.
+
 ├── README.md
 ├── part1/
 │   ├── README.md
@@ -169,6 +169,7 @@ This lab is divided into **three parts**, each expanding the security posture of
 │   └── securetext.py
 └── .gitignore
 
+```text
 ---
 
 ## Getting Started
@@ -224,18 +225,6 @@ Create accounts and send messages to explore how the system behaves.
 - OpenSSL
 - hashcat
 - hash_extender / HashPump
-
-### Python Libraries
-- bcrypt
-- pyotp
-- qrcode
-- cryptography
-
-To install per-part dependencies (if a `requirements.txt` exists):
-
-```bash
-pip install -r requirements.txt
-```
 
 ---
 
