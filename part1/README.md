@@ -1,9 +1,9 @@
-# Assignment 1: Security Foundations
+# Part 1: Security Foundations
 **Focus**: Basic security vulnerabilities, password security, and network attacks
 
 ## Overview
 
-In this assignment, you will analyze an intentionally insecure messenger application, identify vulnerabilities, demonstrate attacks, and implement security fixes. This assignment establishes the foundation for understanding common security threats and basic cryptographic protections. So in short each assignment follows a three-step workflow for each security challenge:
+In this part, I will analyze an intentionally insecure messenger application, identify vulnerabilities, demonstrate attacks, and implement security fixes. This part establishes the foundation for understanding common security threats and basic cryptographic protections. So in short each assignment follows a three-step workflow for each security challenge:
 
 - Identify the vulnerability in the provided SecureText application
 
@@ -13,7 +13,6 @@ In this assignment, you will analyze an intentionally insecure messenger applica
 
 ## Learning Objectives
 
-After completing this assignment, you will understand:
 - Common security vulnerabilities in applications
 - Password storage security (hashing, salting)
 - Network eavesdropping and message tampering
@@ -186,8 +185,6 @@ sudo tcpdump -i lo -A -s 0 port 12345
 3. Apply filter: tcp.port == 12345
 
 
-#### Note that you can extend the hash yourself or use the current open source hash externder tools
-
 
 ### Deliverables
 - **Attack Scripts and implementation**: All attacks and exploit scripts should be in the deliverable folder and evidences must be logged and record in the report
@@ -200,47 +197,3 @@ sudo tcpdump -i lo -A -s 0 port 12345
 
 ---
 
-## Report Requirements
-
-Use the provided `REPORT_TEMPLATE.md` and include all necessary information
-
-### Evidence Requirements
-- **Screenshots**: Console outputs, network captures, attack demonstrations
-- **Code Snippets**: Key implementation details (not entire files, entire files should be in the forked repo in the proper assignment deliverable)
-- **Logs**: Attack outputs, MAC verification results
-- **Performance Data**: Hash timing comparisons and other relevant information
-
-## Other Useful Info
-
-**Install Required Tools**:
-   ```bash
-   # Install network analysis tools
-   sudo apt-get install wireshark tcpdump  # Linux
-   ```
-
-## Important Notes
-
-- **Start Early**: Network setup and attack demonstrations can be time-consuming
-- **Document Everything**: Take screenshots and save logs as you work
-- **Test Thoroughly**: Ensure your implementations work before moving to the next task
-- **Security First**: Consider the implications of each vulnerability and fix
-
-## Common Issues and Solutions
-
-### Network Capture Problems
-- **Permission denied**: Use `sudo` for tcpdump or run Wireshark as admin
-- **No traffic captured**: Check loopback interface and correct port numbers
-- **Encrypted traffic**: Ensure you're analyzing the unmodified base application
-
-### Implementation Problems
-- **Socket errors**: Check port availability and firewall settings
-- **Authentication failures**: Verify hash/salt implementation consistency
-
----
-
-**Due Date**: June 18th, 2025
-**Submission**: Submit your completed report on Brightspace with your GitHub repository fork link
-
-In this assignment series security vulnerabilities are everywhere - your job is to find them, attack and fix them systematically.
-
-Good luck!
