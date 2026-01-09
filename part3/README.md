@@ -1,32 +1,19 @@
-# Assignment 3: End-to-End Encryption Implementation
+# Part 3: End-to-End Encryption Implementation
 
-**Course**: ECE572 - Security, Privacy and Data Analytics
 **Focus**: Implementing E2EE with ECDH key exchange, AES-GCM encryption, and session management
 
 ## Overview
 
-This assignment extends your SecureText application from Assignments 1 and 2 to implement end-to-end encryption (E2EE) with session management. You will implement ECDH key exchange, AES-GCM encryption, and 30-minute session expiration to ensure that messages can only be read by the intended recipient with time-limited security sessions and supporting forward secrecy.
+This part extends my SecureText application from psrts 1 and 2 to implement end-to-end encryption with session management. I will implement ECDH key exchange, AES-GCM encryption, and 30-minute session expiration to ensure that messages can only be read by the intended recipient with time-limited security sessions and supporting forward secrecy.
 
 ## Learning Objectives
 
-After completing this assignment, you will understand:
 - Elliptic Curve Diffie-Hellman (ECDH) key exchange protocol
 - Hybrid encryption using ECDH + AES-GCM
 - Session management and expiration mechanisms
 - End-to-end encryption security properties
 - Key management and secure session cleanup
 - Integration of cryptographic protocols with existing applications
-
-## Assignment Structure
-
-```
-assignments/
-└── assignment3/
-    ├── README.md
-    ├── requirements.txt
-    └── deliverables/
-        └── [Your implementation files]
-```
 
 ## Technical Requirements
 
@@ -145,15 +132,3 @@ Make sure you include the following sections in your report:
    - Session management security assessment
    - Threat analysis and mitigation strategies
    - Implementation design decisions and justifications
-
-3. **Demo Video of Full Secure-Code Working Code**
-   - All previous fixes for SecureText
-   - End-to-end encrypted messaging demonstration
-   - Session expiration and re-authentication
-   - Security property verification
-
-**Due Date**: [July 31th - 11 PM]
-**Submission**: Submit your completed report on Brightspace with your GitHub repository link
----
-
-**Note**: In case you use GenAI you must note and reference collaboration of GenAI in detail showcasing what was the contribution in details.
